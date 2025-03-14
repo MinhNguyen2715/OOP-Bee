@@ -3,12 +3,13 @@ package com.example.oopbee.entity;
 import java.util.Random;
 
 public abstract class Bee {
-
+    @SuppressWarnings("java:S2245")
+    private static final Random rand = new Random();
     private String type;
     private int health;
     private boolean alive;
 
-    public Bee() {
+    protected Bee() {
         this.health = 100;
         this.alive = true;
     }
@@ -65,8 +66,6 @@ public abstract class Bee {
         if (this.isAlive()) {
 
             // Random 1 -> 100
-            @SuppressWarnings("java:S2245")
-            Random rand = new Random();
             int damageAmount = rand.nextInt(100) + 1;
 
             int delta = this.getHealth() - damageAmount;
@@ -83,7 +82,6 @@ public abstract class Bee {
 
     @Override
     public String toString() {
-        String beeDetails = this.getType() + "\t" + this.getHealth() + "\t" + (isAlive() == true ? "alive" : "dead");
-        return beeDetails;
+        return  this.getType() + "\t" + this.getHealth() + "\t" + (isAlive() ? "alive" : "dead");
     }
 }
