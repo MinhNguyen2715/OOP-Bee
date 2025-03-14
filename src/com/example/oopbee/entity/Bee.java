@@ -65,6 +65,7 @@ public abstract class Bee {
         if (this.isAlive()) {
 
             // Random 1 -> 100
+            @SuppressWarnings("java:S2245")
             Random rand = new Random();
             int damageAmount = rand.nextInt(100) + 1;
 
