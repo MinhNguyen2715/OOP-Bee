@@ -6,14 +6,17 @@ import com.example.oopbee.entity.QueenBee;
 import com.example.oopbee.entity.WorkerBee;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * Logic class: create bee list, attack bee
  */
 public class BeeHive {
-    private ArrayList<Bee> listBee;
+    private List<Bee> listBee;
 
+    @SuppressWarnings("java:S2245")
+    private static final Random rand = new Random();
     public void init() {
         //create list of 10 bees  of Queen, Drone and Worker types
         //in each bee, type and health attributes are randomly chosen
@@ -22,10 +25,6 @@ public class BeeHive {
         this.listBee.add(new QueenBee());
         this.listBee.add(new WorkerBee());
         this.listBee.add(new Drone());
-
-
-        // Random from 1 -> 3
-        Random rand = new Random();
 
         for (int i = 0 ; i < 7 ; i++) {
             int r = rand.nextInt(3) + 1;
@@ -42,7 +41,7 @@ public class BeeHive {
         }
     }
 
-    public ArrayList<Bee> getAllBees() {
+    public List<Bee> getAllBees() {
         return listBee;
     }
 
