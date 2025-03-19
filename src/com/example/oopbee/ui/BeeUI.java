@@ -5,63 +5,70 @@ import com.example.oopbee.entity.Bee;
 
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.logging.Logger;
 
 /**
  * UI Class
  */
 public class BeeUI {
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    private static final Logger LOGGER = Logger.getLogger(BeeUI.class.getName());
 
+    public static void main(String[] args) {
         BeeHive bh = null;
         boolean keepRunning = true;
         Scanner s = new Scanner(System.in);
         int choice;
 
         while (keepRunning) {
-            //menu
-            System.out.println("--------------Bee hive--------------");
-            System.out.println("\t1 – Create bee list");
-            System.out.println("\t2 – Attack bees");
-            System.out.println("\t3 - Exit");
-            System.out.print("Enter your choice (1, 2 or 3): ");
-            choice = s.nextInt();
+            // Menu
+            LOGGER.info("--------------Bee hive--------------");
+            LOGGER.info("\t1 – Create bee list");
+            LOGGER.info("\t2 – Attack bees");
+            LOGGER.info("\t3 - Exit");
+            LOGGER.info("Enter your choice (1, 2 or 3): ");
+
+            if (s.hasNextInt()) {
+                choice = s.nextInt();
+            } else {
+                LOGGER.warning("Invalid input. Please enter a number.");
+                s.next(); // Consume invalid input
+                continue;
+            }
+
             List<Bee> bees;
             switch (choice) {
                 case 1:
                     bh = new BeeHive();
-                    bh.init();//create 10 bees
+                    bh.init();
                     bees = bh.getAllBees();
-                    System.out.println("Bees details at the beginning:");
+                    LOGGER.info("Bees details at the beginning:");
                     showBees(bees);
                     break;
                 case 2:
                     if (bh == null) {
-                        System.out.println("No bee!");
+                        LOGGER.warning("No bee!");
                     } else {
-                        bh.attackBees();//attack bees
+                        bh.attackBees();
                         bees = bh.getAllBees();
-                        System.out.println("Bees details at the moment:");
+                        LOGGER.info("Bees details at the moment:");
                         showBees(bees);
                     }
                     break;
-                default:
+                case 3:
                     keepRunning = false;
+                    LOGGER.info("Exiting application.");
+                    break;
+                default:
+                    LOGGER.warning("Invalid choice! Please enter 1, 2, or 3.");
             }
         }
 
-        //close
         s.close();
-
     }
 
     public static void showBees(List<Bee> bees) {
-        for (int i = 0; i < bees.size(); i++) {
-            //show bee information
-            System.out.println(bees.get(i));
+        for (Bee bee : bees) {
+            LOGGER.info(bee.toString());
         }
     }
 }
